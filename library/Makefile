@@ -6,7 +6,7 @@
 #    By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 11:34:16 by ejuarros          #+#    #+#              #
-#    Updated: 2024/06/28 10:15:44 by ejuarros         ###   ########.fr        #
+#    Updated: 2024/06/28 10:53:37 by ejuarros         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,5 +127,3 @@ msg:
 .PHONY: all clean fclean re 
 # .PHONY used to mark a target as phony: it doesn't consider for execution
 # any file that matches its name.
-
-
