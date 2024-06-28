@@ -6,7 +6,7 @@
 #    By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 20:52:15 by elena             #+#    #+#              #
-#    Updated: 2024/06/28 10:14:50 by ejuarros         ###   ########.fr        #
+#    Updated: 2024/06/28 11:22:02 by ejuarros         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,8 @@ MAKEFLAGS	+= -s
 # Possible source files path
 VPATH = srcs:srcs/rules:checker_srcs
 
-# Libft file
-LIBFT = $(LIB_DIR)/libft.a
+# Library file
+LIB = $(LIB_DIR)/libft.a
 
 # Source files
 SRCS =	main.c \
@@ -91,25 +91,23 @@ all: $(NAME) msg
 	@echo
 
 # Push swap compilation
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIB) $(OBJS)
 	@rm -rf $(TMP)
 	@echo
-	@$(CC) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(OBJS) $(LIB) -o $(NAME)
 
 # Objects compilation
 $(BIN_DIR)/%.o: %.c
 	@mkdir -p $(BIN_DIR)
-	
 	@if [ ! -e $(TMP) ]; then \
 		touch $(TMP); \
 		echo "$(MAGENTA)🔶 MAKE PROGRAM 🔶$(DEFAULT)\n"; \
 	fi
-	
 	@echo -n "\033[2K\r🔍 $(YELLOW)Compiling... $< $(DEFAULT)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Libft compilation
-$(LIBFT):
+# Library compilation
+$(LIB):
 	@echo
 	@echo "$(MAGENTA)🔶 MAKE LIBS 🔶$(DEFAULT)"
 	@echo
@@ -121,28 +119,23 @@ $(LIBFT):
 bonus:  $(CHECKER) msg_checker
 	@echo
 
-$(CHECKER): $(CHECKER_OBJS) $(LIBFT)
+$(CHECKER): $(CHECKER_OBJS) $(LIB)
 	@echo "$(MAGENTA)🔶 MAKE CHECKER 🔶$(DEFAULT)"
-	@$(CC) $(CHECKER_OBJS) $(LIBFT) -o $(CHECKER)
+	@$(CC) $(CHECKER_OBJS) $(LIB) -o $(CHECKER)
 	@echo
 
 ################################################################################
 
-clean:
-	@echo
-	@echo "$(MAGENTA)🔶 CLEAN 🔶$(DEFAULT)"
-	@echo
-	@make clean -C $(LIB_DIR)
+aux_clean:
 	@$(REMOVE) $(OBJS) $(CHECKER_OBJS) $(BIN_DIR)
 	@echo "$(CYAN)Push swap object files cleaned$(DEFAULT)"
+
+clean: msg_clean
+	@make clean -C $(LIB_DIR)
+	@make aux_clean
 	@echo
 
-fclean:
-	@echo
-	@echo "$(MAGENTA)🔶 CLEAN 🔶$(DEFAULT)"
-	@echo
-	@$(REMOVE) $(OBJS) $(CHECKER_OBJS) $(BIN_DIR)
-	@echo "$(CYAN)Push swap object files cleaned$(DEFAULT)"
+fclean: msg_clean aux_clean
 	@$(REMOVE) $(NAME) $(CHECKER)
 	@echo "$(CYAN)Push swap executable files cleaned!$(DEFAULT)"
 	@echo
@@ -161,5 +154,10 @@ msg:
 msg_checker:
 	@echo "$(GREEN)✨ CHECKER!$(DEFAULT)"
 
+msg_clean:
+	@echo
+	@echo "$(MAGENTA)🔶 CLEAN 🔶$(DEFAULT)"
+	@echo
+
 ################################################################################
-.PHONY: all clean fclean bonus re msg msg_checker msg_program
+.PHONY: all bonus aux_clean clean fclean re msg msg_checker msg_clean
