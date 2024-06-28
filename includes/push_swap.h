@@ -6,7 +6,7 @@
 /*   By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:54:34 by elena             #+#    #+#             */
-/*   Updated: 2024/03/21 07:56:16 by ejuarros         ###   ########.fr       */
+/*   Updated: 2024/06/28 09:18:01 by ejuarros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ typedef struct s_stack
  *  @param b stack b
  *  @param c stack to swap (s for both)
  *  @param w write enable
- * 
- *  @return void
 */
 void	swap(t_stack **a, t_stack **b, int c, int w);
 
@@ -66,8 +64,6 @@ void	swap(t_stack **a, t_stack **b, int c, int w);
  *  @param b stack b
  *  @param c stack to push into
  *  @param w writ enable
- * 
- *  @return void
 */
 void	push(t_stack **a, t_stack **b, int c, int w);
 
@@ -77,8 +73,6 @@ void	push(t_stack **a, t_stack **b, int c, int w);
  *  @param b stack b
  *  @param c stack to rotate (r for both)
  *  @param w write enable
- * 
- *  @return void
 */
 void	rotate(t_stack **a, t_stack **b, int c, int w);
 
@@ -88,8 +82,6 @@ void	rotate(t_stack **a, t_stack **b, int c, int w);
  *  @param b stack b
  *  @param c stack to reverse rotate (r for both)
  *  @param w write enable
- * 
- *  @return void
 */
 void	reverse_rotate(t_stack **a, t_stack **b, int c, int w);
 
@@ -99,8 +91,6 @@ void	reverse_rotate(t_stack **a, t_stack **b, int c, int w);
  * 
  *  @param a stack a
  *  @param b stack b
- * 
- *  @return void
 */
 void	print_stacks(t_stack const *a, t_stack const *b, char *msg);
 
@@ -117,8 +107,7 @@ t_stack	*ft_init(int argc, char **argv);
 
 // ------------------ ft_error.c ------------------
 
-/** @brief Prints "Error\\n" to the standard error output
-*/
+/** @brief Prints "Error\\n" to the standard error output */
 void	ft_print_error(void);
 
 // ------------------ list_utils.c ------------------
@@ -127,8 +116,6 @@ void	ft_print_error(void);
  * 
  * 	@param lst double pointer to the list
  * 	@param new node to add to the list
- * 
- * 	@return void
 */
 void	ft_add_back(t_stack **stack, t_stack *new);
 
@@ -161,8 +148,6 @@ int		ft_size(t_stack *stack);
  *
  * 	@param lst double pointer to the list
  * 	@param new pointer to a delete function
- * 
- * 	@return void
 */
 void	ft_clear(t_stack **stack, void (*del)(void *));
 
@@ -170,8 +155,6 @@ void	ft_clear(t_stack **stack, void (*del)(void *));
  * 
  * 	@param lst double pointer to the list
  * 	@param new pointer to a delete function
- * 
- * 	@return void
 */
 void	ft_delone(t_stack *stack, void (*del)(void *));
 
@@ -180,8 +163,6 @@ void	ft_delone(t_stack *stack, void (*del)(void *));
 /** @brief Sorts a stack
  * 
  *  @param a stack to sort
- * 
- *  @return void 
 */
 void	ft_sort(t_stack **a);
 
@@ -190,24 +171,18 @@ void	ft_sort(t_stack **a);
  *  @attention Check stack is not ordered
  * 
  *  @param a stack to sort
- * 
- *  @return void 
 */
 void	ft_sort_three(t_stack **a);
 
 /** @brief Sorts a stack of more than three elements
  * 
  * @param a stack to sort
- * 
- * @return void 
 */
 void	ft_sort_big(t_stack **a);
 
 /** @brief Places the lowest element at the top of the stack
  * 
  * @param a stack a
- * 
- * @return void
 */
 void	ft_place_head(t_stack **a);
 
@@ -266,8 +241,6 @@ int		ft_dup_number(t_stack const *stack);
  * 
  * @param a stack a
  * @param b stack b
- * 
- * @return void
 */
 void	ft_init_moves(t_stack **a, t_stack **b);
 
@@ -275,8 +248,6 @@ void	ft_init_moves(t_stack **a, t_stack **b);
  * 
  *  @param a stack a
  *  @param b stack b
- * 
- *  @return void
 */
 void	ft_move_cheapest(t_stack **a, t_stack **b);
 
@@ -304,8 +275,6 @@ int		ft_in_between(int lim1, int lim2, int n);
 /** @brief Sets all the movement variables to zero
  * 
  * @param stack stack to set to zero
- * 
- * @return void
 */
 void	ft_set_zero(t_stack *stack);
 
@@ -316,8 +285,6 @@ void	ft_set_zero(t_stack *stack);
  * 
  * @param a stack a
  * @param b stack b
- * 
- * @return void
 */
 void	ft_calc_moves_a(t_stack *a, t_stack *b);
 
@@ -325,16 +292,12 @@ void	ft_calc_moves_a(t_stack *a, t_stack *b);
  *  position
  * 
  * @param b stack b
- * 
- * @return void
 */
 void	ft_calc_moves_b(t_stack *b);
 
 /** @brief Adjusts the movements to use rr and rrr
  * 
  * @param b stack b
- * 
- * @return void
 */
 void	ft_adjust_moves(t_stack *b);
 

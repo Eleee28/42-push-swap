@@ -6,58 +6,54 @@
 #    By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 20:52:15 by elena             #+#    #+#              #
-#    Updated: 2024/03/20 12:02:42 by ejuarros         ###   ########.fr        #
+#    Updated: 2024/06/28 10:14:50 by ejuarros         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# COLOR CODES
+#################################### COLORS ####################################
+DEFAULT	= \033[0m
+GREEN	= \033[92m
+YELLOW	= \033[93m
+MAGENTA	= \033[95m
+CYAN	= \033[96m
+################################## VARIABLES ###################################
 
-DEFAULT = \033[0m
+# Mandatory executable
+NAME		= push_swap
 
-GREEN = \033[92m
+# Bonus executable
+CHECKER		= checker
 
-RED = \033[91m
+# Library directory
+LIB_DIR	= library
 
-YELLOW = \033[93m
+# Objects directory
+BIN_DIR		= bin
 
-BLUE = \033[36m
+# Temporary file for traking compilation
+TMP			= $(BIN_DIR)/.tmp
 
-MAGENTA = \033[95m
+################################################################################
 
-CYAN = \033[96m
+# Compilation variables
+CC			:= cc
+CFLAGS		:= -Wall -Werror -Wextra
 
-GRAY = \033[90m
+# Remove flags
+REMOVE		:= rm -rf
 
-BOLD = \033[1m
+# Make flags
+MAKEFLAGS	+= -s
 
-# VARIABLES
+################################################################################
 
-NAME = push_swap
-
-CHECKER = checker
-
-SRC_DIR = srcs
-
-RULES_DIR = rules
-
-CHECKER_DIR = checker_srcs
-
-LIBFT_DIR = library
-
-BIN_DIR = bin
-
-CC = cc
-
-CFLAGS += -Wall -Werror -Wextra -g3
-
-REMOVE = rm -rf
-
-LIB = ar -crs
-
+# Possible source files path
 VPATH = srcs:srcs/rules:checker_srcs
 
-# SOURCES
+# Libft file
+LIBFT = $(LIB_DIR)/libft.a
 
+# Source files
 SRCS =	main.c \
 		ft_error.c \
 		ft_init.c \
@@ -83,83 +79,87 @@ CHECKER_SRCS = 	ft_error.c \
 				ft_is_sorted.c \
 				ft_dup_number.c \
 				checker.c
-		
-OBJS = $(SRCS:%.c=$(BIN_DIR)/%.o)  $(RULES:%.c=$(BIN_DIR)/%.o)
 
+# Object files
+OBJS = $(SRCS:%.c=$(BIN_DIR)/%.o)  $(RULES:%.c=$(BIN_DIR)/%.o)
 CHECKER_OBJS =	$(CHECKER_SRCS:%.c=$(BIN_DIR)/%.o) $(RULES:%.c=$(BIN_DIR)/%.o)
 
-LIBFT = $(LIBFT_DIR)/libft.a
+################################################################################
 
-all:	$(NAME) msg
-		@echo " "
+# Main rule
+all: $(NAME) msg
+	@echo
 
-$(NAME): $(OBJS) $(LIBFT)
-	@echo " "
-	@echo "$(MAGENTA)🔶 MAKE PROGRAM 🔶$(DEFAULT)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo " "
-	@echo "👉 $(CYAN) $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(DEFAULT)"
-	@echo " "
+# Push swap compilation
+$(NAME): $(LIBFT) $(OBJS)
+	@rm -rf $(TMP)
+	@echo
+	@$(CC) $(OBJS) $(LIBFT) -o $(NAME)
+
+# Objects compilation
+$(BIN_DIR)/%.o: %.c
+	@mkdir -p $(BIN_DIR)
+	
+	@if [ ! -e $(TMP) ]; then \
+		touch $(TMP); \
+		echo "$(MAGENTA)🔶 MAKE PROGRAM 🔶$(DEFAULT)\n"; \
+	fi
+	
+	@echo -n "\033[2K\r🔍 $(YELLOW)Compiling... $< $(DEFAULT)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Libft compilation
+$(LIBFT):
+	@echo
+	@echo "$(MAGENTA)🔶 MAKE LIBS 🔶$(DEFAULT)"
+	@echo
+	@make -C $(LIB_DIR)
+
+################################################################################
+
+# Checker compilation
+bonus:  $(CHECKER) msg_checker
+	@echo
+
+$(CHECKER): $(CHECKER_OBJS) $(LIBFT)
+	@echo "$(MAGENTA)🔶 MAKE CHECKER 🔶$(DEFAULT)"
+	@$(CC) $(CHECKER_OBJS) $(LIBFT) -o $(CHECKER)
+	@echo
+
+################################################################################
+
+clean:
+	@echo
+	@echo "$(MAGENTA)🔶 CLEAN 🔶$(DEFAULT)"
+	@echo
+	@make clean -C $(LIB_DIR)
+	@$(REMOVE) $(OBJS) $(CHECKER_OBJS) $(BIN_DIR)
+	@echo "$(CYAN)Push swap object files cleaned$(DEFAULT)"
+	@echo
+
+fclean:
+	@echo
+	@echo "$(MAGENTA)🔶 CLEAN 🔶$(DEFAULT)"
+	@echo
+	@$(REMOVE) $(OBJS) $(CHECKER_OBJS) $(BIN_DIR)
+	@echo "$(CYAN)Push swap object files cleaned$(DEFAULT)"
+	@$(REMOVE) $(NAME) $(CHECKER)
+	@echo "$(CYAN)Push swap executable files cleaned!$(DEFAULT)"
+	@echo
+	@make fclean -C $(LIB_DIR)
+	
+re: fclean
+	@echo "$(GREEN)Cleaned everything for push swap!$(DEFAULT)"
+	@make all
+
+################################################################################
 
 msg:
+	@echo
 	@echo "$(GREEN)✨ PUSH SWAP!$(DEFAULT)"
 
 msg_checker:
 	@echo "$(GREEN)✨ CHECKER!$(DEFAULT)"
 
-$(BIN_DIR)/%.o: %.c
-	@mkdir -p $(BIN_DIR)
-	@echo "🔍 $(YELLOW)Compiling... $< $(DEFAULT)"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# $(BIN_DIR)/%.o: %.c
-# 	@mkdir -p $(BIN_DIR)
-# 	@echo "🔍 $(YELLOW)Compiling... $< $(DEFAULT)"
-# 	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(LIBFT): 
-	@echo " "
-	@echo "$(MAGENTA)🔶 MAKE LIBS 🔶$(DEFAULT)"
-	@echo " "
-	@echo "$(GREEN)Libft lib...$(DEFAULT)"
-	@$(MAKE) -sC $(LIBFT_DIR)
-	@echo " "
-	@make -sC $(LIBFT_DIR)
-	@echo "$(GREEN)Library compiled!$(DEFAULT)"
-
-clean:
-	@echo " "
-	@echo "$(MAGENTA)🔶 CLEAN 🔶$(DEFAULT)"
-	@echo " "
-	@make clean -sC $(LIBFT_DIR)
-	@echo "$(CYAN)Library object files cleaned$(DEFAULT)"
-	@$(REMOVE) $(OBJS) $(CHECKER_OBJS) $(BIN_DIR)
-	@echo "$(CYAN)Push swap object files cleaned$(DEFAULT)"
-
-fclean: clean
-	@$(REMOVE) $(NAME) $(CHECKER)
-	@echo "$(CYAN)Push swap executable files cleaned!$(DEFAULT)"
-	@make fclean -C $(LIBFT_DIR)
-	@echo "$(CYAN)Library executable files cleaned!$(DEFAULT)"
-	
-re: fclean
-	@echo " "
-	@echo "$(GREEN)Cleaned everything for push swap!$(DEFAULT)"
-	@$(MAKE) all
-
-test: all
-	@cp $(NAME) test/.
-	@cd test; ./push_swap_test.sh
-
-bonus:  $(CHECKER) msg_checker
-		@echo " "
-
-$(CHECKER): $(CHECKER_OBJS) $(LIBFT)
-			@echo " "
-			@echo "$(MAGENTA)🔶 MAKE CHECKER 🔶$(DEFAULT)"
-			@$(CC) $(CFLAGS) $(CHECKER_OBJS) $(LIBFT) -o $(CHECKER)
-			@echo " "
-			@echo "👉 $(CYAN) $(CC) $(CFLAGS) $(CHECKER_OBJS) $(LIBFT) -o $(CHECKER) $(DEFAULT)"
-			@echo " "
-	
-.PHONY: all clean fclean bonus re
+################################################################################
+.PHONY: all clean fclean bonus re msg msg_checker msg_program
