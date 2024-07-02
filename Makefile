@@ -6,7 +6,7 @@
 #    By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 20:52:15 by elena             #+#    #+#              #
-#    Updated: 2024/06/28 11:22:02 by ejuarros         ###   ########.fr        #
+#    Updated: 2024/07/02 11:31:25 by ejuarros         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME		= push_swap
 CHECKER		= checker
 
 # Library directory
-LIB_DIR	= library
+LIB_DIR		= library
 
 # Objects directory
 BIN_DIR		= bin
