@@ -6,7 +6,7 @@
 /*   By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:24:42 by ejuarros          #+#    #+#             */
-/*   Updated: 2024/03/20 09:23:13 by ejuarros         ###   ########.fr       */
+/*   Updated: 2024/09/02 09:03:51 by ejuarros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	ft_is_sorted(t_stack const *stack)
 	t_stack	*tmp;
 
 	sorted = 1;
-	if (stack && stack)
+	if (stack)
 		tmp = (t_stack *) stack;
-	while (sorted && tmp && tmp->next)
+	while (sorted && stack && tmp && tmp->next)
 	{
 		if (tmp->num > (tmp->next)->num)
 			sorted = 0;
