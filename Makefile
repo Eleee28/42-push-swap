@@ -6,7 +6,7 @@
 #    By: ejuarros <ejuarros@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 20:52:15 by elena             #+#    #+#              #
-#    Updated: 2024/07/02 11:31:25 by ejuarros         ###   ########.fr        #
+#    Updated: 2024/09/02 10:41:49 by ejuarros         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,8 @@ bonus:  $(CHECKER) msg_checker
 	@echo
 
 $(CHECKER): $(CHECKER_OBJS) $(LIB)
+	@echo
+	@echo
 	@echo "$(MAGENTA)🔶 MAKE CHECKER 🔶$(DEFAULT)"
 	@$(CC) $(CHECKER_OBJS) $(LIB) -o $(CHECKER)
 	@echo
