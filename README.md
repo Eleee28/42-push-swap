@@ -1,4 +1,12 @@
-# 42_push_swap
+<p align="center">
+  <img src="https://github.com/ayogun/42-project-badges/blob/main/badges/push_swapm.png" alt="push swap badge">
+</p>
+
+<h1 align="center">
+  42 Push Swap
+</h1>
+
+<!-- # 42_push_swap -->
 
 Statement of the project (in [Spanish](es.subject.pdf) / [English](en.subject.pdf))
 
